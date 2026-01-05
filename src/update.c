@@ -1,12 +1,11 @@
 #include "state.h"
 #include <stdio.h>
 
-
 #include "update.h"
 
 unsigned char grid_get(const grid_t *g, int x, int y) {
   if (x < 0 || x >= g->width || y < 0 || y >= g->height)
-    return 0; // Rand = tot 
+    return 0; // Rand = tot
   return g->cells[y * g->width + x];
 }
 
@@ -29,6 +28,11 @@ int count_neighbors(const grid_t *g, int x, int y) {
 }
 
 void world_step(world_state_t *w) {
+
+  // lebendig + 2 oder 3 nachbarn -> lebt weiter
+  // lebendig + mehr als 3 oder weniger als 2 -> tot
+  // tot + genau 3 lebendige -> lebt
+
   grid_t *cur = &w->current;
   grid_t *next = &w->next;
 
@@ -39,6 +43,7 @@ void world_step(world_state_t *w) {
       unsigned char new_value = 0;
 
       if (alive) {
+
         if (neighbors == 2 || neighbors == 3)
           new_value = 1;
       } else {
@@ -51,7 +56,14 @@ void world_step(world_state_t *w) {
   }
 
   // Buffer tauschen
-  grid_t tmp = *cur;
-  *cur = *next;
-  *next = tmp;
+  //grid_t tmp = *cur;
+  //*cur = *next;
+  //*next = tmp;
+
+  // Besser weil weniger geswitch wird
+  unsigned char *tmp_cells = cur->cells;
+  cur->cells = next->cells;
+  next->cells = tmp_cells;
 }
+
+

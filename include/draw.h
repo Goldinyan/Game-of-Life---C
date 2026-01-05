@@ -4,6 +4,7 @@
 #include "state.h"
 
 
+void choose_coords(world_state_t *w);
 void grid_render(const grid_t *g);
 void run(world_state_t *w);
 
