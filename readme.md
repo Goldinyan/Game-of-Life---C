@@ -1,5 +1,4 @@
 
-```markdown
 # Conway’s Game of Life (Terminal Version)
 
 This project is a minimalistic, fast implementation of **Conway’s Game of Life** in C.  
@@ -83,5 +82,4 @@ git pull
 ## License
 
 MIT License – see LICENSE file.
-```
 
